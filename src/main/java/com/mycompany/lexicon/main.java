@@ -30,14 +30,16 @@ public class main {
     public static void translate(){
         boolean repeat = true;
         do{
+            
             System.out.println("Enter what you would like to be translated");
+            String bugStr = input.next();
             String str = input.nextLine();
+            str = bugStr+ str;
             for (int i = 0; i < alphabet.size(); i++) {
                 str = str.replace(String.valueOf(ogAlphabet.get(i)), alphabet.get(i));
             }
             System.out.println("The translated text is: ");
             System.out.println(str);
-            System.out.println(" ");
             System.out.println("Would you like to translate some other text? Enter y for yes or n for no.");
             String ans = input.nextLine();
             if (ans.equalsIgnoreCase("n")){
@@ -52,6 +54,8 @@ public class main {
     }
     
     public static void addToLexicon(){
+        char replacedChr;
+        boolean repeat;
         String newChr;
         char c;
         char character = ' ';
@@ -62,10 +66,24 @@ public class main {
                 + " if your character is an amalgamation of multiple characters denote the new "
                 + "characters ascii value with a space. Write the ascii value in denary");
         System.out.println("Enter new character");
+        String bugStr = input.next();
         String str = input.nextLine();
-        System.out.println("What character does it replace, state the ascii value.");
-        int integer = input.nextInt();
-        char replacedChr = (char) integer;
+        str = bugStr + str;
+        System.out.println(str);
+        do{
+            System.out.println("What character does it replace, state the ascii value.");
+            int integer = input.nextInt();
+            repeat = false;
+            replacedChr = (char) integer;
+            for (int i = 0; i < alphabet.size(); i++) {
+                if (replacedChr == ogAlphabet.get(i)){
+                    System.out.println("The character alreagy gets replaced by our lexicon, change the"
+                            + " character representing the one you want to replace from menu or "
+                            + "replace different character");
+                    repeat = true;
+                }
+            }
+        }while (repeat);
         ogAlphabet.add(replacedChr);
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == ' '){
@@ -86,12 +104,12 @@ public class main {
     }
     
     public static void removeFromLexicon(){
-        for (int i = 0; i < alphabet.size()+1; i++) {
-            System.out.println("At position: " + i+1 + " the character is: " + alphabet.get(i));
+        for (int i = 0; i < alphabet.size(); i++) {
+            System.out.println("At position: " + (i+1) + " the character is: " + alphabet.get(i));
         }
         System.out.println("Enter the character to be removed or replaced position's in the table");
         int place = input.nextInt();
-        ogAlphabet.remove(place);
-        alphabet.remove(place);
+        ogAlphabet.remove(place-1);
+        alphabet.remove(place-1);
     }
 } 
